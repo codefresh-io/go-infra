@@ -36,6 +36,8 @@ func (n *NewRelicLogrusHook) Fire(entry *logrus.Entry) error {
 		if txn, ok = v.(newrelic.Transaction); !ok {
 			txn = n.Application.StartTransaction("errorTxn", nil, nil)
 		}
+	} else {
+		txn = n.Application.StartTransaction("errorTxn", nil, nil)
 	}
 	// get other fields
 	for k, v := range entry.Data {
