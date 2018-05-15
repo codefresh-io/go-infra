@@ -36,7 +36,9 @@ func (n *NewRelicLogrusHook) Fire(entry *logrus.Entry) error {
 		if txn, ok = v.(newrelic.Transaction); !ok {
 			txn = n.Application.StartTransaction("errorTxn", nil, nil)
 		}
-	} else {
+	}
+	// create new transaction if not fount in context
+	if txn == nil {
 		txn = n.Application.StartTransaction("errorTxn", nil, nil)
 	}
 	// get other fields
